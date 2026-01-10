@@ -14,12 +14,24 @@ export default function App() {
         setActivities((prev) => [activity, ...prev]);
     }, [activity]);
 
+    const markAsRead = (id: string) => {
+        const activity = activities.find((a) => a.id === id);
+
+        if(!activity) return;
+
+        activity.status = "READ";
+
+        setActivities(activities.map((a) => a.id === activity.id ? activity : a));
+    }
+
 	return (<>
         {activities.length > 0 
         ? <li>
             {activities.map((a) => (
                 <ul key={a.id}>
                     <p>{a.title}</p>
+                    <p>{a.status}</p>
+                    <button onClick={() => markAsRead(a.id)}>Mark as read</button>
                 </ul>
             ))}
         </li> 
