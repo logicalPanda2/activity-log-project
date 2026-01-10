@@ -21,7 +21,7 @@ const DATABASE: DATABASE = {
     ]
 }
 
-export default function generateActivity(): Activity {
+function generateActivity(): Activity {
     const subjectIndex = Math.floor(Math.random() * DATABASE.SUBJECTS.length);
     const predicateIndex = Math.floor(Math.random() * DATABASE.PREDICATES.length);
     const objectIndex = Math.floor(Math.random() * DATABASE.OBJECTS.length);
@@ -67,10 +67,31 @@ function getFormattedTime(): string {
     return `${date}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 }
 
-//function logResult() {
-//    const activity = generateActivity();
+function simulateNetwork<T>(
+    callback: () => T, 
+    {
+        minDelay = 250,
+        maxDelay = 1000,
+        failureRate = 0.1,
+        generateError = () => new Error("An unexpected error occured"),
+    }: {
+        minDelay?: number,
+        maxDelay?: number,
+        failureRate?: number,
+        generateError?: () => Error,
+    } = {}
+) {
+    return async function() {
+        const delay = minDelay + Math.random() * (maxDelay - minDelay);
 
-//    for(const [k, v] of Object.entries(activity)) {
-//        console.log(`${k}: ${v}`);
-//    }
-//}
+        await new Promise(r => setTimeout(r, delay));
+
+        if(Math.random() < failureRate) throw generateError();
+
+        return callback();
+    }
+}
+
+const activityAPI = simulateNetwork(generateActivity);
+
+export default activityAPI();
