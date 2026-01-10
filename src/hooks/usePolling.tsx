@@ -36,7 +36,10 @@ export default function usePolling<T>(
 
             timeoutId = setTimeout(tick, delay);
 
-            if(errors >= maxRetries) clearTimeout(timeoutId);
+            if(errors >= maxRetries) {
+                clearTimeout(timeoutId);
+                setError(`Max retries exceeded. Please click refresh to rerun the auto-refresh.`);
+            }
         }
 
         if(!isFetching) tick();
