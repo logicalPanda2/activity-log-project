@@ -3,7 +3,10 @@ interface Activity {
     id: string,
     status: ActivityStatus,
     type: ActivityType,
-    // add a date here later
+    formattedCreationTime: string,
+    date: number,
+    month: number,
+    year: number,
     creator: string,
 }
 
