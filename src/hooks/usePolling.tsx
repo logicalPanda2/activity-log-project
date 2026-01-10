@@ -21,6 +21,7 @@ export default function usePolling<T>(
         const tick = async () => {
             if(isFetching) return;
 
+            setError("");
             isFetching = true;
 
             try {
@@ -29,7 +30,7 @@ export default function usePolling<T>(
                 isFetching = false;
             } catch(error) {
                 errors++;
-                if(hasStringMessage(error)) setError(error.message);
+                if(hasStringMessage(error)) setError(`Error: ${error.message}\nRetrying...`);
                 isFetching = false;
             }
 
