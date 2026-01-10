@@ -9,3 +9,13 @@ interface Activity {
 
 type ActivityStatus = "UNREAD" | "READ";
 type ActivityType = "UPLOAD" | "REPORT" | "UPDATE";
+
+type SUBJECTS = string[];
+type PREDICATES = [string, ActivityType][];
+type OBJECTS = string[];
+
+interface DATABASE {
+    SUBJECTS: SUBJECTS,
+    PREDICATES: PREDICATES,
+    OBJECTS: OBJECTS,
+}
