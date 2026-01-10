@@ -7,11 +7,14 @@ export default function ActivityLog({
 }: ActivityLogProps) {
     const [visibleActivities, setVisibleActivities] = useState<number>(5);
 
-    const increaseVisibleActivities = (): void => {
-        setVisibleActivities(c => c + 5);
+    const loadMore = (): void => {
+        const len = activities.length;
+
+        if(visibleActivities + 5 < len) setVisibleActivities(v => v + 5);
+        else setVisibleActivities(len);
     }
 
-    const decreaseVisibleActivities = (): void => {
+    const resetVisibleActivities = (): void => {
         setVisibleActivities(5);
     }
 
@@ -24,11 +27,13 @@ export default function ActivityLog({
                     return <ActivityItem activity={a} onRead={onRead} />
                 })}
             </li>
-            {/* still dont understand this, refactor later */}
+            {/* Flawed logic, the collapse button appears before it is needed
+                TODO REFACTOR EVENTUALLY
+            */}
             {activities.length > visibleActivities
-            ? <button onClick={increaseVisibleActivities}>Load more</button>
-            : activities.length >= visibleActivities 
-            ? <button onClick={decreaseVisibleActivities}>Collapse</button>
+            ? <button onClick={loadMore}>Load more</button>
+            : activities.length >= visibleActivities
+            ? <button onClick={resetVisibleActivities}>Collapse</button>
             : <></>}
         </div>
     );
