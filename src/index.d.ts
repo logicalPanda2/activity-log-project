@@ -1,6 +1,5 @@
 interface Activity {
     title: string,
-    description: string,
     id: string,
     status: ActivityStatus,
     type: ActivityType,
