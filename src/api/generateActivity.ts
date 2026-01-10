@@ -72,7 +72,7 @@ function simulateNetwork<T>(
     {
         minDelay = 250,
         maxDelay = 1000,
-        failureRate = 0.1,
+        failureRate = 0.05,
         generateError = () => new Error("An unexpected error occured"),
     }: {
         minDelay?: number,
