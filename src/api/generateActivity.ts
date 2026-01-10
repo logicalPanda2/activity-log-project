@@ -1,10 +1,10 @@
 const DATABASE: DATABASE = {
     SUBJECTS: [
-        "John",
-        "Jane",
-        "Jack",
-        "Jilliana",
-        "Anthony"
+        "User V",
+        "User W",
+        "User X",
+        "User Y",
+        "User Z"
     ],
     PREDICATES: [
         ["uploaded", "UPLOAD"],
