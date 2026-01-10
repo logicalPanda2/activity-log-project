@@ -6,6 +6,7 @@ export default function ActivityLog({
     onRead,
 }: ActivityLogProps) {
     const [visibleActivities, setVisibleActivities] = useState<number>(5);
+    const screenLimit = 9;
 
     const loadMore = (): void => {
         const len = activities.length;
@@ -16,6 +17,10 @@ export default function ActivityLog({
 
     const resetVisibleActivities = (): void => {
         setVisibleActivities(5);
+    }
+
+    const scrollToTop = (): void => {
+        window.scrollTo(0, 0);
     }
 
     return (
@@ -34,6 +39,10 @@ export default function ActivityLog({
             ? <button onClick={loadMore}>Load more</button>
             : activities.length >= visibleActivities
             ? <button onClick={resetVisibleActivities}>Collapse</button>
+            : <></>}
+            <br />
+            {visibleActivities >= screenLimit
+            ? <button onClick={scrollToTop}>Jump to newest</button> 
             : <></>}
         </div>
     );
