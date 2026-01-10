@@ -18,6 +18,10 @@ const DATABASE: DATABASE = {
         "a commit to a repository",
         "a foul in a baseball game",
         "found footage of bigfoot",
+        "a new tech trend",
+        "an ominous puzzle",
+        "a thriller-comedy movie",
+        "yet another dry joke",
     ]
 }
 
