@@ -92,6 +92,6 @@ function simulateNetwork<T>(
     }
 }
 
-const activityAPI = simulateNetwork(generateActivity);
+const activityAPI = simulateNetwork<Activity>(generateActivity);
 
 export default activityAPI;
