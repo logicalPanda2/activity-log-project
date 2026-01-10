@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import fetchActivity from "./api/fetchActivity";
 import usePolling from "./hooks/usePolling";
+import ActivityLog from "./components/ActivityLog";
 
 export default function App() {
     const [activity, error] = usePolling<Activity>(fetchActivity, {
@@ -26,15 +27,10 @@ export default function App() {
 
 	return (<>
         {activities.length > 0 
-        ? <li>
-            {activities.map((a) => (
-                <ul key={a.id}>
-                    <p>{a.title}</p>
-                    <p>{a.status}</p>
-                    <button onClick={() => markAsRead(a.id)}>Mark as read</button>
-                </ul>
-            ))}
-        </li> 
+        ? <ActivityLog 
+            activities={activities}
+            onRead={markAsRead}
+        /> 
         : <p>No logs available</p>}
         {error &&
             <p className="whitespace-pre-line">{error}</p>

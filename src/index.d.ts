@@ -22,3 +22,8 @@ interface DATABASE {
     PREDICATES: PREDICATES,
     OBJECTS: OBJECTS,
 }
+
+interface ActivityLogProps {
+    activities: Activity[],
+    onRead: (id: string) => void,
+}
