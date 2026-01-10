@@ -15,7 +15,7 @@ export default function App() {
         setActivities((prev) => [activity, ...prev]);
     }, [activity]);
 
-    const markAsRead = (id: string) => {
+    const markAsRead = (id: string): void => {
         const activity = activities.find((a) => a.id === id);
 
         if(!activity) return;
