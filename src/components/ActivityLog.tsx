@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ActivityItem from "./ActivityItem";
 
 export default function ActivityLog({
     activities,
@@ -10,11 +11,7 @@ export default function ActivityLog({
         <div>
             <li>
                 {activities.map((a) => (
-                    <ul key={a.id}>
-                        <p>{a.title}</p>
-                        <p>{a.status}</p>
-                        <button onClick={() => onRead(a.id)}>Mark as read</button>
-                    </ul>
+                    <ActivityItem activity={a} onRead={onRead} />
                 ))}
             </li>
             {isCollapsed

@@ -27,3 +27,8 @@ interface ActivityLogProps {
     activities: Activity[],
     onRead: (id: string) => void,
 }
+
+interface ActivityItemProps {
+    activity: Activity,
+    onRead: (id: string) => void,
+}
