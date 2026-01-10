@@ -6,14 +6,6 @@ export default async function fetchActivity() {
 
         return data;
     } catch(error: unknown) {
-        if(
-            typeof error === "object" &&
-            error !== null && 
-            "message" in error
-        ) { 
-            return error.message;
-        }
+        throw error;
     }
 }
-
-//console.log(await fetchActivity());
