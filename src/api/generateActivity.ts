@@ -13,7 +13,7 @@ const DATABASE: DATABASE = {
     ],
     OBJECTS: [
         "a picture of a cat",
-        "a bug in a newly uploaded game",
+        "a bug in a new game",
         "a social media post",
         "a commit to a repository",
         "a foul in a baseball game",
