@@ -5,7 +5,7 @@ html {
 }
 
 body {
-    @apply w-screen h-screen p-8
+    @apply w-screen h-screen p-8 bg-neutral-100
 }
 
 div#root {
