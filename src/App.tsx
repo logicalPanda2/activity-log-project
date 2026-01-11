@@ -3,6 +3,7 @@ import ActivityLog from "./components/ActivityLog";
 import activityAPI from "./api/generateActivity";
 import usePolling from "./hooks/usePolling";
 import useActivity from "./hooks/useActivity";
+import Button from "./components/Button";
 
 export default function App() {
     const [statusFilter, setStatusFilter] = useState<ActivityStatus | string>("none");
@@ -34,9 +35,9 @@ export default function App() {
 
     return (
         <main>
-            <button onClick={refresh}>Refresh</button>
-            <button onClick={pauseAndResume}>{pollingEnabled ? "Pause" : "Resume"}</button>
-            <button onClick={clear}>Clear</button>
+            <Button onClick={refresh} text="Refresh" />
+            <Button onClick={pauseAndResume} text={pollingEnabled ? "Pause" : "Resume"} />
+            <Button onClick={clear} text="Clear" />
             <label htmlFor="statusFilter">Filter by status</label>
             <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                 <option value="none">None</option>
