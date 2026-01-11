@@ -30,7 +30,7 @@ export default function App() {
     useEffect(() => {
         if(!data) return;
 
-        setActivities((prev) => [...prev, data]);
+        setActivities((prev) => [data, ...prev]);
     }, [data]);
 
     return (
