@@ -33,7 +33,7 @@ export default function App() {
     }, [data]);
 
     return (
-        <>
+        <main>
             <button onClick={refresh}>Refresh</button>
             <button onClick={pauseAndResume}>{pollingEnabled ? "Pause" : "Resume"}</button>
             <button onClick={clear}>Clear</button>
@@ -51,6 +51,6 @@ export default function App() {
                 <option value="REPORT">Report</option>
             </select>
             <ActivityLog activities={filteredActivities} onRead={markAsRead} />
-        </>
+        </main>
     );
 }
