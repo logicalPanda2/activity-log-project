@@ -18,7 +18,7 @@ export default function App() {
         pollingEnabled,
         refresh,
         pauseAndResume
-    } = usePolling(activityAPI);
+    } = usePolling<Activity>(activityAPI);
     const filteredActivities = 
         statusFilter !== "none"
         ? typeFilter !== "none"
