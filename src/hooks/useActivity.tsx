@@ -1,4 +1,4 @@
-import { useState } from "react";
+import useLocalStorage from "./useLocalStorage";
 
 export default function useActivity(): {
     activities: Activity[],
@@ -6,7 +6,7 @@ export default function useActivity(): {
     markAsRead: (id: string) => void,
     clear: () => void,
 } {
-    const [activities, setActivities] = useState<Activity[]>([]);
+    const [activities, setActivities] = useLocalStorage<Activity[]>("activities", []);
 
     const markAsRead = (id: string) => {
         const target = activities.find(a => a.id === id);
