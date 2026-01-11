@@ -23,13 +23,13 @@ export default function ActivityLog({
 
     return (
         <div>
-            <li>
+            <ul>
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
 
                     return <ActivityItem key={a.id} activity={a} onRead={onRead} />
                 })}
-            </li>
+            </ul>
             {activities.length > defaultVisible
             ? visibleActivities < activities.length
             ? <button onClick={loadMore}>Load more</button>
