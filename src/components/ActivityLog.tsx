@@ -5,14 +5,12 @@ export default function ActivityLog({
     activities,
     onRead,
 }: ActivityLogProps) {
-    const [visibleActivities, setVisibleActivities] = useState<number>(5);
+    const defaultVisible = 5;
+    const [visibleActivities, setVisibleActivities] = useState<number>(defaultVisible);
     const screenLimit = 9;
 
     const loadMore = (): void => {
-        const len = activities.length;
-
-        if(visibleActivities + 5 < len) setVisibleActivities(v => v + 5);
-        else setVisibleActivities(len);
+        setVisibleActivities(v => v + 5);
     }
 
     const resetVisibleActivities = (): void => {
@@ -32,12 +30,9 @@ export default function ActivityLog({
                     return <ActivityItem key={a.id} activity={a} onRead={onRead} />
                 })}
             </li>
-            {/* Flawed logic, the collapse button appears before it is needed
-                TODO REFACTOR EVENTUALLY
-            */}
-            {activities.length > visibleActivities
+            {visibleActivities < activities.length
             ? <button onClick={loadMore}>Load more</button>
-            : activities.length >= visibleActivities
+            : visibleActivities > activities.length && activities.length > defaultVisible
             ? <button onClick={resetVisibleActivities}>Collapse</button>
             : <></>}
             <br />
