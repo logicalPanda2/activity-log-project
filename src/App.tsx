@@ -10,7 +10,7 @@ export default function App() {
     let errorCount = useRef<number>(0);
     let timeoutId = useRef<number | undefined>(undefined);
     const maxRetries = 3;
-    const delay = 500;
+    const delay = 2000;
 
     const markAsRead = (id: string) => {
         const target = activities.find(a => a.id === id);
@@ -51,6 +51,11 @@ export default function App() {
         setPollingEnabled(true);
     }
 
+    const pauseAndResume = () => {
+        clearTimeout(timeoutId.current);
+        setPollingEnabled(!pollingEnabled);
+    }
+
     useEffect(() => {
         if(!pollingEnabled) return;
 
@@ -83,6 +88,7 @@ export default function App() {
     return (
         <>
             <button onClick={refresh}>Refresh</button>
+            <button onClick={pauseAndResume}>{pollingEnabled ? "Pause" : "Resume"}</button>
             <ActivityLog activities={activities} onRead={markAsRead} />
         </>
     );
