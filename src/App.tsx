@@ -56,6 +56,10 @@ export default function App() {
         setPollingEnabled(!pollingEnabled);
     }
 
+    const clear = () => {
+        setActivities([]);
+    }
+
     useEffect(() => {
         if(!pollingEnabled) return;
 
@@ -89,6 +93,7 @@ export default function App() {
         <>
             <button onClick={refresh}>Refresh</button>
             <button onClick={pauseAndResume}>{pollingEnabled ? "Pause" : "Resume"}</button>
+            <button onClick={clear}>Clear</button>
             <ActivityLog activities={activities} onRead={markAsRead} />
         </>
     );
