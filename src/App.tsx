@@ -1,18 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ActivityLog from "./components/ActivityLog";
 import activityAPI from "./api/generateActivity";
+import usePolling from "./hooks/usePolling";
 
 export default function App() {
     const [activities, setActivities] = useState<Activity[]>([]);
-    const [newActivity, setNewActivity] = useState<Activity | null>(null);
-    const [pollingEnabled, setPollingEnabled] = useState(true);
     const [statusFilter, setStatusFilter] = useState<ActivityStatus | string>("none");
     const [typeFilter, setTypeFilter] = useState<ActivityType | string>("none");
-    let isFetching = useRef<boolean>(false);
-    let errorCount = useRef<number>(0);
-    let timeoutId = useRef<number | undefined>(undefined);
-    const maxRetries = 3;
-    const delay = 5000;
+    const {
+        data,
+        pollingEnabled,
+        refresh,
+        pauseAndResume
+    } = usePolling(activityAPI);
     const filteredActivities = 
         statusFilter !== "none"
         ? typeFilter !== "none"
@@ -30,72 +30,15 @@ export default function App() {
         setActivities(activities.map((a) => (a.id === target.id ? target : a)));
     }
 
-    const poll = async () => {
-        if(isFetching.current) return;
-
-        isFetching.current = true;
-
-        try {
-            const data = await activityAPI();
-            setNewActivity(data);
-            errorCount.current = 0;
-        } catch(e) {
-            errorCount.current++;
-            console.error(e);
-
-            if(errorCount.current >= maxRetries) {
-                setPollingEnabled(false);
-                console.error("Max retries exceeded. Stopping auto-refresh..");
-            }
-        } finally {
-            isFetching.current = false;
-        }
-    }
-
-    const refresh = () => {
-        if(pollingEnabled) return;
-
-        errorCount.current = 0;
-        setPollingEnabled(true);
-    }
-
-    const pauseAndResume = () => {
-        clearTimeout(timeoutId.current);
-        setPollingEnabled(!pollingEnabled);
-    }
-
     const clear = () => {
         setActivities([]);
     }
 
     useEffect(() => {
-        if(!pollingEnabled) return;
+        if(!data) return;
 
-        let cancelled = false;
-
-        const tick = async () => {
-            if(cancelled) return;
-
-            await poll();
-
-            if(!cancelled && pollingEnabled) {
-                timeoutId.current = setTimeout(tick, delay);
-            }
-        };
-
-        tick();
-
-        return () => {
-            cancelled = true;
-            if(timeoutId.current) clearTimeout(timeoutId.current);
-        };
-    }, [pollingEnabled]);
-
-    useEffect(() => {
-        if(!newActivity) return;
-
-        setActivities((prev) => [...prev, newActivity]);
-    }, [newActivity]);
+        setActivities((prev) => [...prev, data]);
+    }, [data]);
 
     return (
         <>
