@@ -37,7 +37,7 @@ export default function ActivityLog({
             : <></>
             }
             <br />
-            {visibleActivities >= screenLimit
+            {activities.length >= screenLimit && visibleActivities >= screenLimit
             ? <button onClick={scrollToTop}>Jump to newest</button> 
             : <></>}
         </div>
