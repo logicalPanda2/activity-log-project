@@ -29,7 +29,7 @@ export default function ActivityLog({
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
 
-                    return <ActivityItem activity={a} onRead={onRead} />
+                    return <ActivityItem key={a.id} activity={a} onRead={onRead} />
                 })}
             </li>
             {/* Flawed logic, the collapse button appears before it is needed
