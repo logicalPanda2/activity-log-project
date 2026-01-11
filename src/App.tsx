@@ -5,6 +5,7 @@ import activityAPI from "./api/generateActivity";
 export default function App() {
     const [activities, setActivities] = useState<Activity[]>([]);
     const [newActivity, setNewActivity] = useState<Activity | null>(null);
+    const [pollingEnabled, setPollingEnabled] = useState(true);
     let isFetching = useRef<boolean>(false);
     let errorCount = useRef<number>(0);
     let timeoutId = useRef<number | undefined>(undefined);
@@ -22,48 +23,56 @@ export default function App() {
     }
 
     const poll = async () => {
-        try {
-            isFetching.current = true;
+        if(isFetching.current) return;
 
+        isFetching.current = true;
+
+        try {
             const data = await activityAPI();
             setNewActivity(data);
-
             errorCount.current = 0;
-            isFetching.current = false;
-            timeoutId.current = setTimeout(poll, delay);
         } catch(e) {
             errorCount.current++;
             console.error(e);
-            console.log(errorCount.current);
-            isFetching.current = false;
 
             if(errorCount.current >= maxRetries) {
-                console.error("Max retries reached. Auto-refresh stopped");
-            } else {
-                poll();
+                setPollingEnabled(false);
+                console.error("Max retries exceeded. Stopping auto-refresh..");
             }
+        } finally {
+            isFetching.current = false;
         }
     }
 
     const refresh = () => {
-        console.log(isFetching.current);
-        console.log(errorCount.current);
-
-        if(errorCount.current < maxRetries || isFetching.current) return;
-
-        console.log("refreshed");
+        if(pollingEnabled) return;
 
         errorCount.current = 0;
-        poll();
+        setPollingEnabled(true);
     }
 
     useEffect(() => {
-        if(!isFetching.current) poll();
+        if(!pollingEnabled) return;
+
+        let cancelled = false;
+
+        const tick = async () => {
+            if(cancelled) return;
+
+            await poll();
+
+            if(!cancelled && pollingEnabled) {
+                timeoutId.current = setTimeout(tick, delay);
+            }
+        };
+
+        tick();
 
         return () => {
-            clearTimeout(timeoutId.current);
-        }
-    }, []);
+            cancelled = true;
+            if(timeoutId.current) clearTimeout(timeoutId.current);
+        };
+    }, [pollingEnabled]);
 
     useEffect(() => {
         if(!newActivity) return;
