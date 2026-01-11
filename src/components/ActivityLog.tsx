@@ -30,11 +30,12 @@ export default function ActivityLog({
                     return <ActivityItem key={a.id} activity={a} onRead={onRead} />
                 })}
             </li>
-            {visibleActivities < activities.length
+            {activities.length > defaultVisible
+            ? visibleActivities < activities.length
             ? <button onClick={loadMore}>Load more</button>
-            : visibleActivities > activities.length && activities.length > defaultVisible
-            ? <button onClick={resetVisibleActivities}>Collapse</button>
-            : <></>}
+            : <button onClick={resetVisibleActivities}>Collapse</button>
+            : <></>
+            }
             <br />
             {visibleActivities >= screenLimit
             ? <button onClick={scrollToTop}>Jump to newest</button> 
