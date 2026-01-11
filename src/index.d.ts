@@ -32,3 +32,8 @@ interface ActivityItemProps {
     activity: Activity,
     onRead: (id: string) => void,
 }
+
+interface ButtonProps {
+    onClick: () => void,
+    text: string,
+}
