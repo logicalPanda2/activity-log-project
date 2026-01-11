@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import ActivityLog from "./components/ActivityLog";
 import activityAPI from "./api/generateActivity";
 import usePolling from "./hooks/usePolling";
+import useActivity from "./hooks/useActivity";
 
 export default function App() {
-    const [activities, setActivities] = useState<Activity[]>([]);
     const [statusFilter, setStatusFilter] = useState<ActivityStatus | string>("none");
     const [typeFilter, setTypeFilter] = useState<ActivityType | string>("none");
+    const {
+        activities,
+        setActivities,
+        markAsRead,
+        clear
+    } = useActivity();
     const {
         data,
         pollingEnabled,
@@ -19,20 +25,6 @@ export default function App() {
         ? activities.filter(a => a.status === statusFilter).filter(a => a.type === typeFilter)
         : activities.filter(a => a.status === statusFilter)
         : activities
-
-    const markAsRead = (id: string) => {
-        const target = activities.find(a => a.id === id);
-        
-        if(!target) return;
-
-        target.status = "READ";
-
-        setActivities(activities.map((a) => (a.id === target.id ? target : a)));
-    }
-
-    const clear = () => {
-        setActivities([]);
-    }
 
     useEffect(() => {
         if(!data) return;
