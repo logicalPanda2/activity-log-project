@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ActivityItem from "./ActivityItem";
 
 export default function ActivityLog({
@@ -7,7 +7,8 @@ export default function ActivityLog({
 }: ActivityLogProps) {
     const defaultVisible = 5;
     const [visibleActivities, setVisibleActivities] = useState<number>(defaultVisible);
-    const screenLimit = 9;
+    const screenLimit = 5;
+    const mainDiv = useRef<HTMLDivElement | null>(null);
 
     const loadMore = (): void => {
         setVisibleActivities(v => v + 5);
@@ -18,11 +19,17 @@ export default function ActivityLog({
     }
 
     const scrollToTop = (): void => {
-        window.scrollTo(0, 0);
+        if(!mainDiv.current) return;
+
+        mainDiv.current.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
     }
 
     return (
-        <div>
+        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] max-h-96 h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative" ref={mainDiv}>
             <ul>
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
@@ -36,9 +43,8 @@ export default function ActivityLog({
             : <button onClick={resetVisibleActivities}>Collapse</button>
             : <></>
             }
-            <br />
             {activities.length >= screenLimit && visibleActivities >= screenLimit
-            ? <button onClick={scrollToTop}>Jump to newest</button> 
+            ? <button onClick={scrollToTop} className="inline-block w-8 h-8 border border-solid border-black rounded-full">^</button> 
             : <></>}
         </div>
     );
