@@ -26,7 +26,7 @@ export default function ActivityItem({activity, onRead, index}: ActivityItemProp
             }}
             transition={{ delay: isPresent ? (index % defaultVisible) * 0.05 : 0, duration: 0.35, ease: "easeOut", type: "spring" }}
         >
-            <p>{activity.title}</p>
+            <p className="max-w-4/5">{activity.title}</p>
             <div className="flex flex-row justify-between mt-4">
                 <p className="text-xs">{activity.creator}</p>
                 <p className="text-xs">{activity.formattedCreationTime}</p>

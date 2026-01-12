@@ -32,14 +32,14 @@ export default function App() {
 
     return (
         <main className="flex flex-col flex-nowrap">
-            <div className="flex flex-row flex-nowrap justify-between items-center px-20">
+            <div className="flex flex-col md:flex-row flex-nowrap justify-between md:items-center px-2 md:px-20 gap-y-4">
                 <div>
                     <Button onClick={refresh} text="Refresh" />
                     <Button onClick={pauseAndResume} text={pollingEnabled ? "Pause" : "Resume"} />
                     <Button onClick={clear} text="Clear" />
                 </div>
                 <div className="flex flex-row flex-nowrap">
-                    <div className="flex flex-col flex-nowrap mx-2 gap-2">
+                    <div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
                         <label htmlFor="statusFilter">Status</label>
                         <div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
                             <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">
@@ -49,7 +49,7 @@ export default function App() {
                             </select>
                         </div>
                     </div>
-                    <div className="flex flex-col flex-nowrap mx-2 gap-2">
+                    <div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
                         <label htmlFor="typeFilter">Type</label>
                         <div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
                             <select name="typeFilter" id="typeFilter" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">

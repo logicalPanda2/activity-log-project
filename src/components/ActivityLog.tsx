@@ -32,7 +32,7 @@ export default function ActivityLog({
     }
 
     return (
-        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative p-4" ref={mainDiv} onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}>
+        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 md:min-w-xl min-w-64 border border-solid border-black flex flex-col justify-start relative p-4" ref={mainDiv} onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}>
             <ul className="flex flex-col gap-4 mb-4" aria-live="polite">
                 {activities.slice(0, visibleActivities).map((a, index) => {
                     return <ActivityItem key={a.id} activity={a} onRead={onRead} index={index} />
