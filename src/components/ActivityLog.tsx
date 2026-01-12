@@ -9,7 +9,7 @@ export default function ActivityLog({
     const [visibleActivities, setVisibleActivities] = useState<number>(defaultVisible);
     const [topOffset, setTopOffset] = useState<number | undefined>(undefined);
     const mainDiv = useRef<HTMLDivElement | null>(null);
-    const itemHeightPx = 85;
+    const itemHeightPx = 88;
 
     const loadMore = (): void => {
         setVisibleActivities(v => v + 5);
