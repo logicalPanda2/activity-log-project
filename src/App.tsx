@@ -20,12 +20,8 @@ export default function App() {
         refresh,
         pauseAndResume
     } = usePolling<Activity>(activityAPI);
-    const filteredActivities = 
-        statusFilter !== "none"
-        ? typeFilter !== "none"
-        ? activities.filter(a => a.status === statusFilter).filter(a => a.type === typeFilter)
-        : activities.filter(a => a.status === statusFilter)
-        : activities
+    const statusFiltered = statusFilter !== "none" ? activities.filter(a => a.status === statusFilter) : activities;
+    const typeFiltered = typeFilter !== "none" ? activities.filter(a => a.type === typeFilter) : statusFiltered;
 
     useEffect(() => {
         if(!data) return;
@@ -62,7 +58,7 @@ export default function App() {
                 </div>    
             </div>
             <div className="flex flex-col grow items-center justify-end overflow-hidden">
-                <ActivityLog activities={filteredActivities} onRead={markAsRead} />
+                <ActivityLog activities={typeFiltered} onRead={markAsRead} />
             </div>
         </main>
     );
