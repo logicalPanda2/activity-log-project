@@ -32,7 +32,6 @@ interface ActivityItemProps {
     activity: Activity,
     onRead: (id: string) => void,
     index: number,
-    totalVisible: number,
 }
 
 interface ButtonProps {
