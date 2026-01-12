@@ -38,22 +38,26 @@ export default function App() {
                     <Button onClick={clear} text="Clear" />
                 </div>
                 <div className="flex flex-row flex-nowrap">
-                    <div className="flex flex-col flex-nowrap mx-2">
+                    <div className="flex flex-col flex-nowrap mx-2 gap-2">
                         <label htmlFor="statusFilter">Status</label>
-                        <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                            <option value="none">None</option>
-                            <option value="READ">Read</option>
-                            <option value="UNREAD">Unread</option>
-                        </select>
+                        <div className="px-4 py-1 border border-solid border-black rounded focus-within:outline focus-within:outline-solid focus-within:outline-black">
+                            <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">
+                                <option value="none">None</option>
+                                <option value="READ">Read</option>
+                                <option value="UNREAD">Unread</option>
+                            </select>
+                        </div>
                     </div>
-                    <div className="flex flex-col flex-nowrap mx-2">
+                    <div className="flex flex-col flex-nowrap mx-2 gap-2">
                         <label htmlFor="typeFilter">Type</label>
-                        <select name="typeFilter" id="typeFilter" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-                            <option value="none">None</option>
-                            <option value="UPLOAD">Upload</option>
-                            <option value="UPDATE">Update</option>
-                            <option value="REPORT">Report</option>
-                        </select>
+                        <div className="px-4 py-1 border border-solid border-black rounded focus-within:outline focus-within:outline-solid focus-within:outline-black">
+                            <select name="typeFilter" id="typeFilter" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">
+                                <option value="none">None</option>
+                                <option value="UPLOAD">Upload</option>
+                                <option value="UPDATE">Update</option>
+                                <option value="REPORT">Report</option>
+                            </select>
+                        </div>
                     </div>
                 </div>    
             </div>
