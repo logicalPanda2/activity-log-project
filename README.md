@@ -4,8 +4,8 @@
 A real-time activity log that features:
 - a custom activity API (with network simulation)
 - API polling with refresh, pause, and resume controls
-<!--- full test coverage (unit, integration, "happy path" E2E)-->
 - clean transitions and animations with Framer Motion
+<!--- full test coverage (unit, integration, "happy path" E2E)--> 
 
 ## Table of Contents
 1. [Installation](#installation)
