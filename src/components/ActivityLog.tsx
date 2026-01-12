@@ -7,8 +7,9 @@ export default function ActivityLog({
 }: ActivityLogProps) {
     const defaultVisible = 5;
     const [visibleActivities, setVisibleActivities] = useState<number>(defaultVisible);
-    const screenLimit = 6;
+    const [topOffset, setTopOffset] = useState<number | undefined>(undefined);
     const mainDiv = useRef<HTMLDivElement | null>(null);
+    const itemHeightPx = 80;
 
     const loadMore = (): void => {
         setVisibleActivities(v => v + 5);
@@ -29,7 +30,7 @@ export default function ActivityLog({
     }
 
     return (
-        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative" ref={mainDiv}>
+        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative" ref={mainDiv} onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}>
             <ul>
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
@@ -45,7 +46,7 @@ export default function ActivityLog({
                 : <></>}
             </div>
             <div className="h-0 sticky bottom-0 flex flex-row justify-center">
-                {activities.length >= screenLimit && visibleActivities >= screenLimit
+                { topOffset && topOffset >= itemHeightPx
                 ? <button onClick={scrollToTop} className="absolute bottom-4 overflow-visible inline-block w-8 h-8 border border-solid border-black rounded-full">^</button>
                 : <></>}
             </div>
