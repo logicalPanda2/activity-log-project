@@ -7,7 +7,7 @@ export default function ActivityLog({
 }: ActivityLogProps) {
     const defaultVisible = 5;
     const [visibleActivities, setVisibleActivities] = useState<number>(defaultVisible);
-    const screenLimit = 5;
+    const screenLimit = 6;
     const mainDiv = useRef<HTMLDivElement | null>(null);
 
     const loadMore = (): void => {
@@ -29,7 +29,7 @@ export default function ActivityLog({
     }
 
     return (
-        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] max-h-96 h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative" ref={mainDiv}>
+        <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative" ref={mainDiv}>
             <ul>
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
@@ -37,14 +37,16 @@ export default function ActivityLog({
                     return <ActivityItem key={a.id} activity={a} onRead={onRead} />
                 })}
             </ul>
-            {activities.length > defaultVisible
-            ? visibleActivities < activities.length
-            ? <button onClick={loadMore}>Load more</button>
-            : <button onClick={resetVisibleActivities}>Collapse</button>
-            : <></>}
-            <div className="sticky bottom-4 flex flex-row justify-center">
+            <div className="flex flex-row">
+                {activities.length > defaultVisible
+                ? visibleActivities < activities.length
+                ? <button onClick={loadMore}>Load more</button>
+                : <button onClick={resetVisibleActivities}>Collapse</button>
+                : <></>}
+            </div>
+            <div className="h-0 sticky bottom-0 flex flex-row justify-center">
                 {activities.length >= screenLimit && visibleActivities >= screenLimit
-                ? <button onClick={scrollToTop} className="overflow-visible inline-block w-8 h-8 border border-solid border-black rounded-full">^</button>
+                ? <button onClick={scrollToTop} className="absolute bottom-4 overflow-visible inline-block w-8 h-8 border border-solid border-black rounded-full">^</button>
                 : <></>}
             </div>
         </div>
