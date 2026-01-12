@@ -68,7 +68,7 @@ function getFormattedTime(): string {
     const minutes = now.getMinutes().toString().padStart(2, "0");
     const hours = now.getHours().toString().padStart(2, "0");
 
-    return `${date}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    return `${month}-${date}-${year} ${hours}:${minutes}:${seconds}`;
 }
 
 function simulateNetwork<T>(

@@ -65,7 +65,7 @@ export default function App() {
             <div className="flex flex-col grow items-center justify-end overflow-hidden">
                 <ActivityLog activities={typeFiltered} onRead={markAsRead} />
             </div>
-            <p className="absolute bottom-2 self-center text-xs text-red-700 font-semibold text-center">{error}</p>
+            <p className="absolute bottom-2 self-center text-xs text-red-700 font-semibold text-center" role="alert">{error}</p>
         </main>
     );
 }

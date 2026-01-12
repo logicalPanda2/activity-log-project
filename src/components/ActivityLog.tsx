@@ -31,7 +31,7 @@ export default function ActivityLog({
 
     return (
         <div className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] h-96 max-h-96 w-1/2 min-w-xl border border-solid border-black flex flex-col justify-start relative p-4" ref={mainDiv} onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}>
-            <ul className="flex flex-col gap-4 mb-4">
+            <ul className="flex flex-col gap-4 mb-4" aria-live="polite">
                 {activities.map((a, index) => {
                     if(index > (visibleActivities - 1)) return;
 
@@ -47,9 +47,9 @@ export default function ActivityLog({
             </div>
             <div className="h-0 sticky bottom-0 flex flex-row justify-center">
                 { topOffset && topOffset >= itemHeightPx
-                ? <button onClick={scrollToTop} className="absolute bottom-2 overflow-visible w-8 h-8 border bg-blue-600 text-white hover:bg-blue-600/75 active:bg-blue-600/50 rounded-full transition">
-                    <span className="inline-block transform-[scaleX(1.5)] relative left-[2.5px] -top-0.5 text-white">^</span>
-                    <span className="inline-block transform-[scaleY(0.75)] relative -left-1.25 -top-px text-white">|</span>
+                ? <button onClick={scrollToTop} className="absolute bottom-2 overflow-visible w-8 h-8 border bg-blue-600 text-white hover:bg-blue-600/75 active:bg-blue-600/50 rounded-full transition" aria-label="Jump to newest">
+                    <span className="inline-block transform-[scaleX(1.5)] relative left-[2.5px] -top-0.5 text-white" aria-hidden="true">^</span>
+                    <span className="inline-block transform-[scaleY(0.75)] relative -left-1.25 -top-px text-white" aria-hidden="true">|</span>
                 </button>
                 : <></>}
             </div>
