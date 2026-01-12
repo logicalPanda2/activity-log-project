@@ -25,7 +25,7 @@ export default function ActivityItem({activity, onRead, index, totalVisible}: Ac
             onAnimationComplete={() => {
                 if(!isPresent) safeToRemove();
             }}
-            transition={{ delay: isPresent ? (index % defaultVisible) * 0.08 : (totalVisible - index - 1) * 0.06 }}
+            transition={{ delay: isPresent ? (index % defaultVisible) * 0.05 : (totalVisible - index - 1) * 0.05, duration: 0.25, ease: "easeOut" }}
         >
             <p>{activity.title}</p>
             <div className="flex flex-row justify-between mt-4">
