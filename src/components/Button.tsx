@@ -5,7 +5,7 @@ export default function Button({
     return (
         <button
             onClick={onClick}
-            className="px-4 py-1.5 border border-solid border-black rounded mx-2 bg-neutral-50 hover:bg-neutral-100 active:bg-neutral-200 transition"
+            className="px-4 py-1 mx-2 bg-blue-600 text-white hover:bg-blue-600/75 active:bg-blue-600/50 rounded transition"
         >
             {text}
         </button>
