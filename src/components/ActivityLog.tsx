@@ -40,8 +40,8 @@ export default function ActivityLog({
             <div className="flex flex-row">
                 {activities.length > defaultVisible
                 ? visibleActivities < activities.length
-                ? <button onClick={loadMore}>Load more</button>
-                : <button onClick={resetVisibleActivities}>Collapse</button>
+                ? <button onClick={loadMore} className="m-4">Load more</button>
+                : <button onClick={resetVisibleActivities} className="m-4">Collapse</button>
                 : <></>}
             </div>
             <div className="h-0 sticky bottom-0 flex flex-row justify-center">
