@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, usePresence } from "framer-motion";
 
-export default function ActivityItem({activity, onRead, index}: ActivityItemProps) {
+export default function ActivityItem({activity, onRead, index, totalVisible}: ActivityItemProps) {
     const itemVariants = {
         hidden: {
             opacity: 0,
@@ -12,6 +12,7 @@ export default function ActivityItem({activity, onRead, index}: ActivityItemProp
         },
     };
     const defaultVisible = 5;
+    const [isPresent, safeToRemove] = usePresence();
 
     return (
         <motion.li 
@@ -21,7 +22,10 @@ export default function ActivityItem({activity, onRead, index}: ActivityItemProp
             initial={{ opacity: 0, x: -600 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -600 }}
-            transition={{ delay: (index % defaultVisible) * 0.08 }}
+            onAnimationComplete={() => {
+                if(!isPresent) safeToRemove();
+            }}
+            transition={{ delay: isPresent ? (index % defaultVisible) * 0.08 : (totalVisible - index) * 0.08 }}
         >
             <p>{activity.title}</p>
             <div className="flex flex-row justify-between mt-4">

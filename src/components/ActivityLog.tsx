@@ -36,7 +36,7 @@ export default function ActivityLog({
             <ul className="flex flex-col gap-4 mb-4" aria-live="polite">
                 <AnimatePresence>
                 {activities.slice(0, visibleActivities).map((a, index) => {
-                    return <ActivityItem key={a.id} activity={a} onRead={onRead} index={index} />
+                    return <ActivityItem key={a.id} activity={a} onRead={onRead} index={index} totalVisible={activities.slice(0, visibleActivities).length}/>
                 })}
                 </AnimatePresence>
             </ul>
