@@ -1,5 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
+function hasStringMessage(error: unknown): error is Record<"message", string> {
+    if(
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error &&
+        typeof error.message === "string"
+    ) return true;
+
+    return false;
+}
+
 export default function usePolling<T>(
     fetchFn: () => Promise<T>,
     {
@@ -11,6 +22,7 @@ export default function usePolling<T>(
     } = {}
 ): {
     data: T | null,
+    error: string,
     pollingEnabled: boolean,
     refresh: () => void,
     pauseAndResume: () => void,
@@ -19,12 +31,14 @@ export default function usePolling<T>(
     let errorCount = useRef<number>(0);
     let timeoutId = useRef<number | undefined>(undefined);
     const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
     const [data, setData] = useState<T | null>(null);
     
     const poll = async () => {
         if(isFetching.current) return;
 
         isFetching.current = true;
+        setError("");
 
         try {
             const data = await fetchFn();
@@ -33,10 +47,12 @@ export default function usePolling<T>(
         } catch(e) {
             errorCount.current++;
             console.error(e);
+            if(hasStringMessage(e)) setError(e.message);
 
             if(errorCount.current >= maxRetries) {
                 setPollingEnabled(false);
-                console.error("Max retries exceeded. Stopping auto-refresh..");
+                console.error("Max retries exceeded. Auto-refresh stopped.");
+                setError("Max retries exceeded. Auto-refresh stopped.");
             }
         } finally {
             isFetching.current = false;
@@ -80,6 +96,7 @@ export default function usePolling<T>(
 
     return {
         data,
+        error,
         pollingEnabled,
         refresh,
         pauseAndResume,
