@@ -1,14 +1,36 @@
-export default function ActivityItem({activity, onRead}: ActivityItemProps) {
+import { motion } from "framer-motion";
+
+export default function ActivityItem({activity, onRead, index}: ActivityItemProps) {
+    const itemVariants = {
+        hidden: {
+            opacity: 0,
+            x: -600,
+        },
+        visible: {
+            opacity: 1,
+            x: 0,
+        },
+    };
+    const defaultVisible = 5;
+
     return (
-        <li key={activity.id} className="pb-4 relative border-b border-solid border-b-black" onClick={() => onRead(activity.id)}>
+        <motion.li 
+            className="pb-4 relative border-b border-solid border-b-black" 
+            onClick={() => onRead(activity.id)}
+            variants={itemVariants}
+            initial={{ opacity: 0, x: -600 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -600 }}
+            transition={{ delay: (index % defaultVisible) * 0.08 }}
+        >
             <p>{activity.title}</p>
             <div className="flex flex-row justify-between mt-4">
                 <p className="text-xs">{activity.creator}</p>
                 <p className="text-xs">{activity.formattedCreationTime}</p>
             </div>
-            {activity.status === "UNREAD"
-            ? <div className="absolute top-2 right-2 w-3 h-3 bg-blue-600 rounded-full"></div>
-            : <></>}
-        </li>
+            {activity.status === "UNREAD" && (
+                <div className="absolute top-2 right-2 w-3 h-3 bg-blue-600 rounded-full"></div>
+            )}
+        </motion.li>
     );
 }
