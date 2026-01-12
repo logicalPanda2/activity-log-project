@@ -48,8 +48,8 @@ export default function ActivityLog({
             <div className="h-0 sticky bottom-0 flex flex-row justify-center">
                 { topOffset && topOffset >= itemHeightPx
                 ? <button onClick={scrollToTop} className="absolute bottom-2 overflow-visible w-8 h-8 border bg-blue-600 text-white hover:bg-blue-600/75 active:bg-blue-600/50 rounded-full transition">
-                    <span className="inline-block transform-[scaleX(1.5)] relative left-[2.5px] -top-[3.5px] text-white">^</span>
-                    <span className="inline-block transform-[scaleY(0.75)] relative -left-1.25 -top-0.5 text-white">|</span>
+                    <span className="inline-block transform-[scaleX(1.5)] relative left-[2.5px] -top-0.5 text-white">^</span>
+                    <span className="inline-block transform-[scaleY(0.75)] relative -left-1.25 -top-px text-white">|</span>
                 </button>
                 : <></>}
             </div>
