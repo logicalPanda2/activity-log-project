@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-    @apply w-screen h-screen md:p-8 p-4 pt-8 bg-neutral-100
+	@apply w-screen h-screen md:p-8 p-4 pt-8 bg-neutral-100;
 }
 
 div#root {
-    @apply w-full h-full
+	@apply w-full h-full;
 }
 
 main {
-    @apply w-full h-full
+	@apply w-full h-full;
 }

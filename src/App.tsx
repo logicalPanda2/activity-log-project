@@ -6,66 +6,100 @@ import useActivity from "./hooks/useActivity";
 import Button from "./components/Button";
 
 export default function App() {
-    const [statusFilter, setStatusFilter] = useState<ActivityStatus | string>("none");
-    const [typeFilter, setTypeFilter] = useState<ActivityType | string>("none");
-    const {
-        activities,
-        setActivities,
-        markAsRead,
-        clear
-    } = useActivity();
-    const {
-        data,
-        error,
-        pollingEnabled,
-        refresh,
-        pauseAndResume
-    } = usePolling<Activity>(activityAPI);
-    const statusFiltered = statusFilter !== "none" ? activities.filter(a => a.status === statusFilter) : activities;
-    const typeFiltered = typeFilter !== "none" ? activities.filter(a => a.type === typeFilter) : statusFiltered;
+	const [statusFilter, setStatusFilter] = useState<ActivityStatus | string>(
+		"none",
+	);
+	const [typeFilter, setTypeFilter] = useState<ActivityType | string>("none");
+	const { activities, setActivities, markAsRead, clear } = useActivity();
+	const { data, error, pollingEnabled, refresh, pauseAndResume } =
+		usePolling<Activity>(activityAPI);
+	const statusFiltered =
+		statusFilter !== "none"
+			? activities.filter((a) => a.status === statusFilter)
+			: activities;
+	const typeFiltered =
+		typeFilter !== "none"
+			? activities.filter((a) => a.type === typeFilter)
+			: statusFiltered;
 
-    useEffect(() => {
-        if(!data) return;
+	useEffect(() => {
+		if (!data) return;
 
-        setActivities((prev) => [data, ...prev]);
-    }, [data]);
+		setActivities((prev) => [data, ...prev]);
+	}, [data]);
 
-    return (
-        <main className="flex flex-col flex-nowrap">
-            <div className="flex flex-col md:flex-row flex-nowrap justify-between md:items-center px-2 md:px-20 gap-y-4">
-                <div>
-                    <Button onClick={refresh} text="Refresh" />
-                    <Button onClick={pauseAndResume} text={pollingEnabled ? "Pause" : "Resume"} />
-                    <Button onClick={clear} text="Clear" />
-                </div>
-                <div className="flex flex-row flex-nowrap">
-                    <div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
-                        <label htmlFor="statusFilter">Status</label>
-                        <div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
-                            <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">
-                                <option value="none" className="text-black">None</option>
-                                <option value="READ" className="text-black">Read</option>
-                                <option value="UNREAD" className="text-black">Unread</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
-                        <label htmlFor="typeFilter">Type</label>
-                        <div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
-                            <select name="typeFilter" id="typeFilter" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="focus:outline-none focus-visible:outline-none">
-                                <option value="none" className="text-black">None</option>
-                                <option value="UPLOAD" className="text-black">Upload</option>
-                                <option value="UPDATE" className="text-black">Update</option>
-                                <option value="REPORT" className="text-black">Report</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>    
-            </div>
-            <div className="flex flex-col grow items-center justify-end overflow-hidden">
-                <ActivityLog activities={typeFiltered} onRead={markAsRead} />
-            </div>
-            <p className="absolute bottom-2 self-center text-xs text-red-700 font-semibold text-center" role="alert">{error}</p>
-        </main>
-    );
+	return (
+		<main className="flex flex-col flex-nowrap">
+			<div className="flex flex-col md:flex-row flex-nowrap justify-between md:items-center px-2 md:px-20 gap-y-4">
+				<div>
+					<Button onClick={refresh} text="Refresh" />
+					<Button
+						onClick={pauseAndResume}
+						text={pollingEnabled ? "Pause" : "Resume"}
+					/>
+					<Button onClick={clear} text="Clear" />
+				</div>
+				<div className="flex flex-row flex-nowrap">
+					<div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
+						<label htmlFor="statusFilter">Status</label>
+						<div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
+							<select
+								name="statusFilter"
+								id="statusFilter"
+								value={statusFilter}
+								onChange={(e) =>
+									setStatusFilter(e.target.value)
+								}
+								className="focus:outline-none focus-visible:outline-none"
+							>
+								<option value="none" className="text-black">
+									None
+								</option>
+								<option value="READ" className="text-black">
+									Read
+								</option>
+								<option value="UNREAD" className="text-black">
+									Unread
+								</option>
+							</select>
+						</div>
+					</div>
+					<div className="flex flex-col flex-nowrap md:mx-2 mx-1 gap-2">
+						<label htmlFor="typeFilter">Type</label>
+						<div className="px-4 py-1 bg-blue-600 text-white hover:bg-blue-600/75 rounded focus-within:outline-2 focus-within:outline-solid focus-within:outline-black transition">
+							<select
+								name="typeFilter"
+								id="typeFilter"
+								value={typeFilter}
+								onChange={(e) => setTypeFilter(e.target.value)}
+								className="focus:outline-none focus-visible:outline-none"
+							>
+								<option value="none" className="text-black">
+									None
+								</option>
+								<option value="UPLOAD" className="text-black">
+									Upload
+								</option>
+								<option value="UPDATE" className="text-black">
+									Update
+								</option>
+								<option value="REPORT" className="text-black">
+									Report
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-col grow items-center justify-end overflow-hidden">
+				<ActivityLog activities={typeFiltered} onRead={markAsRead} />
+			</div>
+			<p
+				className="absolute bottom-2 self-center text-xs text-red-700 font-semibold text-center"
+				role="alert"
+			>
+				{error}
+			</p>
+		</main>
+	);
 }

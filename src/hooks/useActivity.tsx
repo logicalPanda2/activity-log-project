@@ -1,31 +1,34 @@
 import useLocalStorage from "./useLocalStorage";
 
 export default function useActivity(): {
-    activities: Activity[],
-    setActivities: React.Dispatch<React.SetStateAction<Activity[]>>,
-    markAsRead: (id: string) => void,
-    clear: () => void,
+	activities: Activity[];
+	setActivities: React.Dispatch<React.SetStateAction<Activity[]>>;
+	markAsRead: (id: string) => void;
+	clear: () => void;
 } {
-    const [activities, setActivities] = useLocalStorage<Activity[]>("activities", []);
+	const [activities, setActivities] = useLocalStorage<Activity[]>(
+		"activities",
+		[],
+	);
 
-    const markAsRead = (id: string) => {
-        const target = activities.find(a => a.id === id);
-        
-        if(!target) return;
+	const markAsRead = (id: string) => {
+		const target = activities.find((a) => a.id === id);
 
-        target.status = "READ";
+		if (!target) return;
 
-        setActivities(activities.map((a) => (a.id === target.id ? target : a)));
-    }
+		target.status = "READ";
 
-    const clear = () => {
-        setActivities([]);
-    }
+		setActivities(activities.map((a) => (a.id === target.id ? target : a)));
+	};
 
-    return {
-        activities,
-        setActivities,
-        markAsRead,
-        clear
-    }
+	const clear = () => {
+		setActivities([]);
+	};
+
+	return {
+		activities,
+		setActivities,
+		markAsRead,
+		clear,
+	};
 }
