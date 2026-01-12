@@ -41,11 +41,12 @@ export default function ActivityLog({
             ? visibleActivities < activities.length
             ? <button onClick={loadMore}>Load more</button>
             : <button onClick={resetVisibleActivities}>Collapse</button>
-            : <></>
-            }
-            {activities.length >= screenLimit && visibleActivities >= screenLimit
-            ? <button onClick={scrollToTop} className="inline-block w-8 h-8 border border-solid border-black rounded-full">^</button> 
             : <></>}
+            <div className="sticky bottom-4 flex flex-row justify-center">
+                {activities.length >= screenLimit && visibleActivities >= screenLimit
+                ? <button onClick={scrollToTop} className="overflow-visible inline-block w-8 h-8 border border-solid border-black rounded-full">^</button>
+                : <></>}
+            </div>
         </div>
     );
 }
