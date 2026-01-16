@@ -36,7 +36,7 @@ export default function ActivityLog({ activities, onRead }: ActivityLogProps) {
 			onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}
 		>
 			<ul className="flex flex-col gap-4 mb-4" aria-live="polite">
-				{activities.slice(0, visibleActivities).map((a, index) => {
+				{activities.length > 0 ? activities.slice(0, visibleActivities).map((a, index) => {
 					return (
 						<ActivityItem
 							key={a.id}
@@ -45,7 +45,9 @@ export default function ActivityLog({ activities, onRead }: ActivityLogProps) {
 							index={index}
 						/>
 					);
-				})}
+				}) : (
+                    <p className="self-center text-gray-800">No logs available</p>
+                )}
 			</ul>
 			<div className="flex flex-row">
 				{activities.length > defaultVisible ? (
