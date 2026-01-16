@@ -35,7 +35,7 @@ export default function ActivityLog({ activities, onRead }: ActivityLogProps) {
 			ref={mainDiv}
 			onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}
 		>
-			<ul className="flex flex-col gap-4 mb-4" aria-live="polite">
+			<ul className="flex flex-col gap-4" aria-live="polite">
 				{activities.length > 0 ? activities.slice(0, visibleActivities).map((a, index) => {
 					return (
 						<ActivityItem
@@ -54,14 +54,14 @@ export default function ActivityLog({ activities, onRead }: ActivityLogProps) {
 					visibleActivities < activities.length ? (
 						<button
 							onClick={loadMore}
-							className="hover:text-neutral-600 transition"
+							className="hover:text-neutral-600 transition mt-4"
 						>
 							Load more
 						</button>
 					) : (
 						<button
 							onClick={resetVisibleActivities}
-							className="hover:text-neutral-600 transition"
+							className="hover:text-neutral-600 transition mt-4"
 						>
 							Collapse
 						</button>
