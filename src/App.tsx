@@ -91,7 +91,7 @@ export default function App() {
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-col grow items-center justify-end overflow-hidden">
+			<div className="flex flex-col grow items-center justify-center overflow-hidden">
 				<ActivityLog activities={typeFiltered} onRead={markAsRead} />
 			</div>
 			<p

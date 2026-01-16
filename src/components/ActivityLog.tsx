@@ -31,7 +31,7 @@ export default function ActivityLog({ activities, onRead }: ActivityLogProps) {
 
 	return (
 		<div
-			className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] md:h-96 max-h-4/5 md:w-1/2 w-2/3 md:min-w-xl min-w-64 border border-solid border-black flex flex-col justify-start relative p-4"
+			className="rounded-lg overflow-x-hidden [scrollbar-color:gray_transparent] [scrollbar-width:thin] md:h-96 max-h-4/5 md:w-1/2 md:min-w-xl min-w-64 border border-solid border-black flex flex-col justify-start relative p-4"
 			ref={mainDiv}
 			onScroll={() => setTopOffset(mainDiv.current?.scrollTop)}
 		>
